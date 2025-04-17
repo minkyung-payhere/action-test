@@ -7,24 +7,6 @@ on:
       - feat/mono-repo
 
 jobs:
-  mobile-seller:
-    name: 'Release Drafter - mobile-seller'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          config-name: release-drafter-mobile-seller.yml
-  pc-seller:
-    name: 'Release Drafter - pc-seller'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: release-drafter/release-drafter@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          config-name: release-drafter-pc-seller.yml
   webview:
       name: 'Release Drafter - webview'
       runs-on: ubuntu-latest
