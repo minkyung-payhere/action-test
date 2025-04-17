@@ -1,4 +1,4 @@
-_extends: payhere-pos-pc:.github/release-drafter.yml
+_extends: action-test:.github/release-drafter.yml
 name-template: 'Release: ${{ env.WEBVIEW_NAME }} v$RESOLVED_VERSION'
 tag-template: '${{ env.WEBVIEW_NAME }}-v$RESOLVED_VERSION'
 tag-prefix: '${{ env.WEBVIEW_NAME }}-v'
