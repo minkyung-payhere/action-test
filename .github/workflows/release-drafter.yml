@@ -22,6 +22,9 @@ jobs:
             # 'apply-v1.2.3' → NAME=apply, VERSION=1.2.3
             NAME=${TAG%-v*}
             VERSION=${TAG#*-v}
+            
+            echo "Extracted NAME: $NAME"
+            echo "Extracted VERSION: $VERSION"
 
             echo "WEBVIEW_NAME=$NAME" >> $GITHUB_ENV
             echo "RESOLVED_VERSION=$VERSION" >> $GITHUB_ENV
