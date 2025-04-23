@@ -1,7 +1,7 @@
 _extends: action-test:.github/release-drafter.yml
-name-template: 'Release: ${{ env.WEBVIEW_NAME }} v$RESOLVED_VERSION'
-tag-template: '${{ env.WEBVIEW_NAME }}-v$RESOLVED_VERSION'
-tag-prefix: '${{ env.WEBVIEW_NAME }}-v'
+name-template: 'Release: $WEBVIEW_NAME v$RESOLVED_VERSION'
+tag-template: '$WEBVIEW_NAME-v$RESOLVED_VERSION'
+tag-prefix: '$WEBVIEW_NAME-v'
 include-paths:
   - 'webviews'
   - 'packages'

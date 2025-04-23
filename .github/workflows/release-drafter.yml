@@ -14,11 +14,16 @@ jobs:
       name: 'Release Drafter - webview'
       runs-on: ubuntu-latest
       steps:
+        - uses: actions/checkout@v3  
+
         - name: Draft Release Notes
           uses: release-drafter/release-drafter@v5
           with:
             config-name: release-drafter-webview.yml
+            config-header: |
+              env:
+                WEBVIEW_NAME: 'TEST WEBVIEW NAME'
+            
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            WEBVIEW_NAME: 'webview test'
             
