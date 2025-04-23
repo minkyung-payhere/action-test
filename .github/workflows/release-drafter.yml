@@ -11,32 +11,41 @@ permissions:
 
 jobs:
   release-draft:
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         include:
           - name: mobile-seller
-            paths: '["apps/mobile-seller/**", "packages/**"]'
-            prefix: "Mobile-Seller-v"
+            paths: |
+              apps/mobile-seller/**
+              packages/**
+            prefix: Mobile-Seller
           - name: pc-seller
-            paths: '["apps/pc-seller/**", "packages/**"]'
-            prefix: "PC-Seller-v"
+            paths: |
+              apps/pc-seller/**
+              packages/**
+            prefix: PC-Seller
           - name: retail
-            paths: '["webviews/retail/**", "packages/**"]'
-            prefix: "Retail-v"
+            paths: |
+              webviews/retail/**
+              packages/**
+            prefix: Retail
           - name: admin
-            paths: '["webviews/admin/**", "packages/**"]'
-            prefix: "Admin-v"
+            paths: |
+              webviews/admin/**
+              packages/**
+            prefix: Admin
 
-    name: 'Release Drafter - ${{ matrix.name }}'
-    runs-on: ubuntu-latest
-    if: ${{ contains(github.event.head_commit.modified, fromJson(matrix.paths)) }}
+    name: "Release Drafter - ${{ matrix.name }}"
     steps:
+      - uses: actions/checkout@v3
+
       - uses: release-drafter/release-drafter@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           config-name: release-drafter.yml
-          name-template: 'Release: ${{ matrix.name }} v$RESOLVED_VERSION'
-          tag-template: '${{ matrix.prefix }}-v$RESOLVED_VERSION'
-          tag-prefix: '${{ matrix.prefix }}-v'
+          name-template: "Release: ${{ matrix.name }} v$RESOLVED_VERSION"
+          tag-template: "${{ matrix.prefix }}-v$RESOLVED_VERSION"
+          tag-prefix: "${{ matrix.prefix }}-v"
           include-paths: ${{ matrix.paths }}
