@@ -10,15 +10,33 @@ permissions:
   pull-requests: write
 
 jobs:
-  webview:
-      name: 'Release Drafter - webview'
-      runs-on: ubuntu-latest
-      steps:
-        - name: Draft Release Notes
-          uses: release-drafter/release-drafter@v5
-          with:
-            config-name: release-drafter-webview.yml
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            WEBVIEW_NAME: 'webview test'
-            
+  release-draft:
+    strategy:
+      matrix:
+        include:
+          - name: mobile-seller
+            paths: '["apps/mobile-seller/**", "packages/**"]'
+            prefix: "Mobile-Seller-v"
+          - name: pc-seller
+            paths: '["apps/pc-seller/**", "packages/**"]'
+            prefix: "PC-Seller-v"
+          - name: retail
+            paths: '["webviews/retail/**", "packages/**"]'
+            prefix: "Retail-v"
+          - name: admin
+            paths: '["webviews/admin/**", "packages/**"]'
+            prefix: "Admin-v"
+
+    name: 'Release Drafter - ${{ matrix.name }}'
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.head_commit.modified, fromJson(matrix.paths)) }}
+    steps:
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          config-name: release-drafter.yml
+          name-template: 'Release: ${{ matrix.name }} v$RESOLVED_VERSION'
+          tag-template: '${{ matrix.prefix }}-v$RESOLVED_VERSION'
+          tag-prefix: '${{ matrix.prefix }}-v'
+          include-paths: ${{ matrix.paths }}
